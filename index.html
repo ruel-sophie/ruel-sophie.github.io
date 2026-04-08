@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sophie Ruel — Portfolio BTS SIO · SISR</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+<style>
+:root{
+  --bg:#f7f5ff;
+  --bg2:#eeebff;
+  --card:#ffffff;
+  --violet:#6c47ff;
+  --violet2:#9b7fff;
+  --violet3:#c9beff;
+  --violet-soft:#ede9ff;
+  --indigo:#3b1fa8;
+  --accent:#ff5fa0;
+  --teal:#00c9a7;
+  --gold:#f5a623;
+  --text:#1c1040;
+  --dim:#7265a8;
+  --dim2:#b3aad6;
+  --border:rgba(108,71,255,.13);
+  --border2:rgba(108,71,255,.07);
+  --glow:rgba(108,71,255,.18);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'DM Mono',monospace;overflow-x:hidden;cursor:none}
+img{display:block;width:100%;object-fit:cover}
+a{text-decoration:none;color:inherit}
+
+/* ── CURSEUR ── */
+#dot{position:fixed;top:0;left:0;width:9px;height:9px;background:var(--violet);border-radius:50%;pointer-events:none;z-index:9999;mix-blend-mode:multiply}
+#ring{position:fixed;top:0;left:0;width:36px;height:36px;border:1.5px solid var(--violet2);border-radius:50%;pointer-events:none;z-index:9998;opacity:.45}
+
+/* ── BRUIT SUBTIL ── */
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.025;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:900;display:flex;align-items:center;justify-content:space-between;padding:1rem 5rem;
+  background:rgba(247,245,255,.88);backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border)}
+.logo{font-family:'Bebas Neue',cursive;font-size:1.5rem;letter-spacing:.14em;color:var(--violet)}
+.nav-links{display:flex;gap:2.2rem}
+.nav-links a{font-size:.63rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--violet)}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;align-items:flex-end;padding:0 5rem 5rem;position:relative;overflow:hidden;background:linear-gradient(135deg,#f7f5ff 0%,#ede9ff 50%,#fdf0f8 100%)}
+.hero-orb-a{position:absolute;width:750px;height:750px;border-radius:50%;background:radial-gradient(circle,rgba(108,71,255,.13) 0%,transparent 65%);top:-200px;right:-150px;animation:breathe 9s ease-in-out infinite}
+.hero-orb-b{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(255,95,160,.09) 0%,transparent 65%);bottom:-80px;left:80px;animation:breathe 12s ease-in-out infinite reverse}
+.hero-orb-c{position:absolute;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(0,201,167,.07) 0%,transparent 65%);top:50%;left:40%;animation:breathe 7s ease-in-out infinite}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(108,71,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(108,71,255,.04) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 70% at 50% 50%,black,transparent)}
+@keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.07)}}
+
+.hero-inner{position:relative;z-index:2;width:100%}
+.hero-badge{display:inline-flex;align-items:center;gap:.55rem;border:1.5px solid rgba(108,71,255,.25);background:rgba(108,71,255,.06);padding:.3rem 1rem;border-radius:100px;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--violet);margin-bottom:1.6rem;animation:up .8s ease both}
+.hero-badge::before{content:'';width:6px;height:6px;background:var(--teal);border-radius:50%;animation:blink 2s ease infinite;box-shadow:0 0 8px var(--teal)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
+
+.hero-name{font-family:'Bebas Neue',cursive;font-size:clamp(5rem,17vw,16rem);line-height:.84;letter-spacing:.02em;animation:up .8s .06s ease both}
+.hero-name .ln1{color:var(--text)}
+.hero-name .ln2{color:transparent;-webkit-text-stroke:2px var(--violet);filter:drop-shadow(0 0 40px rgba(108,71,255,.2))}
+
+.hero-bottom{display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:2rem;margin-top:2.2rem;animation:up .8s .14s ease both}
+.hero-desc{font-size:.75rem;line-height:1.9;color:var(--dim);max-width:380px}
+.hero-title{font-family:'Lora',serif;font-style:italic;font-size:clamp(.95rem,2vw,1.25rem);color:var(--dim);text-align:center;white-space:nowrap;opacity:.8}
+.hero-actions{display:flex;justify-content:flex-end;align-items:flex-end;gap:.7rem;flex-wrap:wrap}
+
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.72rem 1.5rem;font-family:'DM Mono',monospace;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;border-radius:100px;transition:all .25s;cursor:none;border:none}
+.btn-fill{background:var(--violet);color:#fff;box-shadow:0 6px 24px rgba(108,71,255,.3)}
+.btn-fill:hover{background:var(--indigo);transform:translateY(-2px);box-shadow:0 10px 32px rgba(108,71,255,.4)}
+.btn-ghost{background:transparent;border:1.5px solid var(--border);color:var(--dim)}
+.btn-ghost:hover{border-color:var(--violet);color:var(--violet);transform:translateY(-2px)}
+
+.hero-stats{display:flex;gap:0;border-top:1px solid var(--border);margin-top:2.5rem;animation:up .8s .22s ease both}
+.stat{flex:1;padding:1.6rem 0;border-right:1px solid var(--border)}
+.stat:last-child{border-right:none}
+.stat-n{font-family:'Bebas Neue',cursive;font-size:3rem;color:var(--violet);line-height:1}
+.stat-l{font-size:.58rem;color:var(--dim2);text-transform:uppercase;letter-spacing:.14em;margin-top:.25rem}
+@keyframes up{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
+
+/* ── SECTIONS ── */
+section{padding:7rem 5rem;position:relative;z-index:2}
+.sec-eye{font-size:.58rem;letter-spacing:.24em;text-transform:uppercase;color:var(--violet);margin-bottom:.5rem;display:flex;align-items:center;gap:.6rem}
+.sec-eye::after{content:'';width:36px;height:1.5px;background:var(--violet3)}
+.sec-h{font-family:'Bebas Neue',cursive;font-size:clamp(2.2rem,5vw,3.8rem);letter-spacing:.05em;margin-bottom:3rem;line-height:1;color:var(--text)}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.reveal.vis{opacity:1;transform:none}
+
+/* ── COMPÉTENCES ── */
+.s-skills{background:#fff}
+.sk-tabs{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.sk-tab{display:flex;align-items:center;gap:.4rem;padding:.45rem 1.2rem;border-radius:100px;border:1.5px solid var(--border);background:transparent;color:var(--dim);font-family:'DM Mono',monospace;font-size:.63rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .18s}
+.sk-tab.on{background:var(--violet);border-color:var(--violet);color:#fff;box-shadow:0 4px 18px rgba(108,71,255,.25)}
+.sk-tab:hover:not(.on){border-color:var(--violet2);color:var(--violet)}
+
+.sk-pane{display:none;animation:up .28s ease both}
+.sk-pane.on{display:block}
+.sk-tbl{background:var(--bg);border-radius:16px;overflow:hidden;border:1px solid var(--border2);box-shadow:0 4px 32px rgba(108,71,255,.06)}
+.sk-th{display:grid;grid-template-columns:2fr 1fr 2.5fr;padding:.8rem 2rem;background:linear-gradient(135deg,var(--violet-soft),#f5f3ff);border-bottom:1px solid var(--border);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim2)}
+.sk-r{display:grid;grid-template-columns:2fr 1fr 2.5fr;padding:1rem 2rem;border-bottom:1px solid var(--border2);align-items:center;transition:background .15s}
+.sk-r:last-child{border-bottom:none}
+.sk-r:hover{background:var(--violet-soft)}
+.sk-name{font-family:'Lora',serif;font-weight:600;font-size:.86rem;color:var(--text);display:flex;align-items:center;gap:.65rem}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dv{background:var(--violet);box-shadow:0 0 8px rgba(108,71,255,.5)}
+.dp{background:var(--accent);box-shadow:0 0 8px rgba(255,95,160,.45)}
+.dt{background:var(--teal);box-shadow:0 0 8px rgba(0,201,167,.45)}
+.pips{display:flex;gap:4px}
+.pip{width:7px;height:7px;border-radius:50%;background:var(--border)}
+.pv{background:var(--violet)}.pp{background:var(--accent)}.pt{background:var(--teal)}
+.sk-tags{display:flex;flex-wrap:wrap;gap:.3rem}
+.tag{font-size:.6rem;padding:.18rem .55rem;border-radius:100px;font-family:'DM Mono',monospace}
+.tv{background:var(--violet-soft);color:var(--violet);border:1px solid var(--violet3)}
+.tp{background:#fff0f6;color:var(--accent);border:1px solid rgba(255,95,160,.25)}
+.tt{background:#e6fdf9;color:var(--teal);border:1px solid rgba(0,201,167,.3)}
+
+/* ── PROJETS ── */
+.s-proj{background:var(--bg2)}
+.p-card{background:#fff;border:1px solid var(--border);border-radius:20px;overflow:hidden;transition:border-color .3s,box-shadow .3s;box-shadow:0 4px 24px var(--glow)}
+.p-card:hover{border-color:var(--violet2);box-shadow:0 12px 48px var(--glow)}
+.p-head{display:flex;align-items:flex-start;justify-content:space-between;gap:2rem;padding:2.5rem 3rem;border-bottom:1px solid var(--border2);flex-wrap:wrap}
+.p-eye{font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--violet);margin-bottom:.4rem}
+.p-title{font-family:'Bebas Neue',cursive;font-size:2.2rem;letter-spacing:.05em;margin-bottom:.6rem;color:var(--text)}
+.p-desc{color:var(--dim);font-size:.75rem;line-height:1.9;max-width:560px}
+.p-chips{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.8rem}
+.chip{font-size:.59rem;padding:.18rem .65rem;border-radius:100px;background:var(--violet-soft);border:1px solid var(--violet3);color:var(--violet)}
+.p-meta{flex-shrink:0;display:flex;flex-direction:column;gap:.8rem}
+.pm-l{font-size:.56rem;color:var(--dim2);text-transform:uppercase;letter-spacing:.12em}
+.pm-v{font-family:'Bebas Neue',cursive;font-size:1.4rem;letter-spacing:.05em;color:var(--violet);line-height:1}
+
+.g-tabs{display:flex;overflow-x:auto;gap:0;padding:0 2.5rem;border-bottom:1px solid var(--border2)}
+.g-tab{padding:.85rem 1.2rem;background:none;border:none;border-bottom:2px solid transparent;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim2);cursor:pointer;transition:all .2s;white-space:nowrap;margin-bottom:-1px}
+.g-tab.on{color:var(--violet);border-bottom-color:var(--violet)}
+.g-tab:hover:not(.on){color:var(--dim)}
+.g-pane{display:none;padding:2.5rem 3rem;animation:up .28s ease both}
+.g-pane.on{display:block}
+.steps{list-style:none;counter-reset:st;margin-bottom:2rem}
+.steps li{counter-increment:st;display:flex;gap:.85rem;align-items:flex-start;margin-bottom:.7rem;font-size:.74rem;line-height:1.8;color:var(--dim)}
+.steps li::before{content:counter(st,'0' decimal-leading-zero);font-family:'DM Mono',monospace;font-size:.6rem;color:var(--violet);background:var(--violet-soft);border:1px solid var(--violet3);padding:.12rem .5rem;border-radius:6px;flex-shrink:0;margin-top:.2rem}
+.g-sub{font-family:'Lora',serif;font-weight:600;font-size:1rem;color:var(--text);margin-bottom:.5rem}
+.g-desc{color:var(--dim);font-size:.74rem;line-height:1.9;margin-bottom:1.4rem;max-width:700px}
+.p-card+.p-card{margin-top:2rem}
+
+/* ── EXPÉRIENCES ── */
+.s-exp{background:#fff}
+.tl{position:relative;padding-left:.5rem}
+.tl::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1.5px;background:linear-gradient(to bottom,var(--violet),var(--violet3),transparent);border-radius:2px}
+.te{padding-left:2.4rem;padding-bottom:3rem;position:relative}
+.te::before{content:'';position:absolute;left:-5px;top:.3rem;width:11px;height:11px;background:var(--violet);border-radius:50%;box-shadow:0 0 18px rgba(108,71,255,.4),0 0 0 3px var(--violet-soft)}
+.te-d{font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--violet);margin-bottom:.3rem}
+.te-r{font-family:'Lora',serif;font-weight:600;font-size:1.05rem;margin-bottom:.15rem;color:var(--text)}
+.te-c{color:var(--dim2);font-size:.72rem;margin-bottom:.85rem}
+.te-ul{list-style:none}
+.te-ul li{color:var(--dim);font-size:.73rem;line-height:1.8;padding-left:1rem;position:relative;margin-bottom:.22rem}
+.te-ul li::before{content:'→';position:absolute;left:0;color:var(--violet2);font-size:.6rem;top:.1rem}
+
+/* ── FORMATION ── */
+.s-form{background:var(--bg2)}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.2rem}
+.fc{background:#fff;border:1px solid var(--border);border-radius:16px;padding:1.8rem;transition:all .28s;position:relative;overflow:hidden}
+.fc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--violet),var(--accent));transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.fc:hover{border-color:var(--violet2);transform:translateY(-4px);box-shadow:0 12px 36px var(--glow)}
+.fc:hover::before{transform:scaleX(1)}
+.fc-y{font-size:.6rem;color:var(--violet2);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.6rem}
+.fc-d{font-family:'Lora',serif;font-weight:600;font-size:.95rem;color:var(--text);margin-bottom:.3rem}
+.fc-s{color:var(--dim2);font-size:.72rem;line-height:1.6}
+
+/* ── LANGUES & LOISIRS ── */
+.s-misc{background:#fff;padding:4rem 5rem}
+.misc-g{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+.panel{background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:2rem}
+.p-t{font-family:'Lora',serif;font-weight:600;font-size:1rem;color:var(--text);margin-bottom:1.5rem}
+.lang{margin-bottom:1rem}
+.lang-row{display:flex;justify-content:space-between;font-size:.7rem;color:var(--dim);margin-bottom:.35rem}
+.lang-lv{color:var(--violet);font-size:.63rem}
+.lang-bar{height:4px;background:var(--border);border-radius:4px;overflow:hidden}
+.lang-fill{height:100%;width:0;background:linear-gradient(90deg,var(--violet),var(--accent));border-radius:4px;transition:width 1.3s cubic-bezier(.22,1,.36,1)}
+.lang-fill.anim{width:var(--w)}
+.hobbies{display:flex;flex-wrap:wrap;gap:.5rem}
+.hob{font-size:.68rem;padding:.4rem .9rem;border-radius:100px;background:var(--violet-soft);border:1px solid var(--violet3);color:var(--violet)}
+
+/* ── TUTORIELS ── */
+.s-tuto{background:var(--bg2);min-height:60vh}
+.tuto-upload-zone{border:2px dashed var(--violet3);border-radius:20px;padding:4rem 3rem;text-align:center;transition:all .3s;cursor:pointer;position:relative;background:rgba(108,71,255,.03);margin-bottom:3rem}
+.tuto-upload-zone:hover,.tuto-upload-zone.drag{border-color:var(--violet);background:var(--violet-soft)}
+.tuto-upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upload-icon{font-size:3rem;margin-bottom:1rem}
+.upload-title{font-family:'Bebas Neue',cursive;font-size:1.8rem;letter-spacing:.08em;color:var(--text);margin-bottom:.5rem}
+.upload-hint{font-size:.66rem;color:var(--dim2);letter-spacing:.1em}
+.upload-hint strong{color:var(--violet)}
+.tuto-progress{display:none;height:4px;background:var(--border);border-radius:4px;margin-bottom:2rem;overflow:hidden}
+.tuto-progress.show{display:block}
+.tuto-progress-bar{height:100%;background:linear-gradient(90deg,var(--violet),var(--accent));width:0%;transition:width .4s ease;border-radius:4px}
+.tuto-file-badge{display:none;align-items:center;gap:.8rem;padding:.7rem 1.2rem;background:var(--violet-soft);border:1px solid var(--violet3);border-radius:10px;margin-bottom:2.5rem;font-size:.7rem;color:var(--violet)}
+.tuto-file-badge.show{display:flex}
+.tuto-file-badge-name{flex:1;letter-spacing:.06em}
+.tuto-file-badge-close{background:none;border:none;color:var(--dim2);cursor:pointer;font-size:1rem;transition:color .2s;padding:0 .3rem}
+.tuto-file-badge-close:hover{color:var(--accent)}
+.tuto-content{background:#fff;border:1px solid var(--border);border-radius:20px;overflow:hidden;display:none;box-shadow:0 8px 32px var(--glow)}
+.tuto-content.show{display:block}
+.tuto-content-header{padding:1.5rem 2.5rem;border-bottom:1px solid var(--border2);display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,var(--violet-soft),#fff)}
+.tuto-content-title{font-family:'Bebas Neue',cursive;font-size:1.4rem;letter-spacing:.08em;color:var(--violet)}
+.tuto-content-body{padding:2.5rem 3rem;font-family:'Lora',serif;font-size:.88rem;line-height:1.9;color:var(--text);max-width:860px}
+.tuto-content-body h1{font-family:'Bebas Neue',cursive;font-size:2rem;letter-spacing:.06em;color:var(--text);margin:2rem 0 .8rem;border-bottom:1px solid var(--border);padding-bottom:.5rem}
+.tuto-content-body h2{font-family:'Lora',serif;font-weight:600;font-size:1.1rem;color:var(--violet);margin:1.6rem 0 .5rem}
+.tuto-content-body h3{font-family:'DM Mono',monospace;font-size:.83rem;text-transform:uppercase;letter-spacing:.12em;color:var(--teal);margin:1.2rem 0 .4rem}
+.tuto-content-body p{margin-bottom:1rem;color:var(--dim)}
+.tuto-content-body strong{color:var(--text)}
+.tuto-content-body em{color:var(--violet2)}
+.tuto-content-body ul,.tuto-content-body ol{padding-left:1.5rem;margin-bottom:1rem}
+.tuto-content-body li{margin-bottom:.4rem;color:var(--dim);font-size:.84rem}
+.tuto-content-body img{max-width:100%;border-radius:10px;border:1px solid var(--border);margin:1rem 0;cursor:pointer;transition:all .28s;display:block}
+.tuto-content-body img:hover{border-color:var(--violet2);transform:scale(1.01);box-shadow:0 12px 40px var(--glow)}
+.tuto-content-body table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:.8rem}
+.tuto-content-body th{background:var(--violet-soft);border:1px solid var(--border);padding:.6rem .9rem;text-align:left;color:var(--violet);font-family:'DM Mono',monospace;font-size:.63rem;text-transform:uppercase;letter-spacing:.1em}
+.tuto-content-body td{border:1px solid var(--border2);padding:.6rem .9rem;color:var(--dim)}
+.tuto-content-body tr:hover td{background:var(--violet-soft)}
+.tuto-content-body code{background:var(--violet-soft);border:1px solid var(--violet3);padding:.1rem .4rem;border-radius:6px;font-family:'DM Mono',monospace;font-size:.8em;color:var(--violet)}
+.tuto-content-body blockquote{border-left:3px solid var(--violet3);padding-left:1.2rem;margin:1rem 0;color:var(--dim2);font-style:italic}
+.tuto-error{display:none;padding:1.5rem 2rem;background:#fff0f6;border:1px solid rgba(255,95,160,.3);border-radius:10px;font-size:.75rem;color:var(--accent);margin-bottom:1.5rem}
+.tuto-error.show{display:block}
+
+/* ── PDF DROP ZONES dans projets ── */
+.pdf-drop-zone{border:2px dashed var(--violet3);border-radius:16px;padding:3rem 2rem;text-align:center;cursor:pointer;background:rgba(108,71,255,.03);transition:all .3s;margin-top:.5rem}
+.pdf-drop-zone:hover,.pdf-drop-zone.drag{border-color:var(--violet);background:var(--violet-soft)}
+.pdf-viewer-wrap{margin-top:1rem}
+
+/* ── PDF DROP ZONE ── */
+.pdf-drop-zone{border:2px dashed var(--violet3);border-radius:16px;padding:3rem 2rem;text-align:center;cursor:pointer;transition:all .3s;background:rgba(108,71,255,.03);margin-bottom:1rem}
+.pdf-drop-zone:hover,.pdf-drop-zone.drag{border-color:var(--violet);background:var(--violet-soft)}
+
+/* ── RESSOURCES ── */
+.s-res{background:var(--bg2)}
+.res-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.4rem}
+.res-card{background:#fff;border:1px solid var(--border);border-radius:20px;overflow:hidden;transition:border-color .3s,box-shadow .3s,transform .3s;box-shadow:0 4px 24px var(--glow)}
+.res-card:hover{border-color:var(--violet2);box-shadow:0 12px 48px var(--glow);transform:translateY(-3px)}
+.res-card-top{padding:1.8rem 2rem 1.4rem;border-bottom:1px solid var(--border2);position:relative;overflow:hidden}
+.res-card-top::before{content:'';position:absolute;top:-30px;right:-30px;width:90px;height:90px;border-radius:50%;opacity:.08}
+.res-v .res-card-top::before{background:var(--violet)}
+.res-p .res-card-top::before{background:var(--accent)}
+.res-t .res-card-top::before{background:var(--teal)}
+.res-g .res-card-top::before{background:var(--gold)}
+.res-eye{font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.4rem}
+.res-v .res-eye{color:var(--violet)}
+.res-p .res-eye{color:var(--accent)}
+.res-t .res-eye{color:var(--teal)}
+.res-g .res-eye{color:var(--gold)}
+.res-name{font-family:'Bebas Neue',cursive;font-size:1.35rem;letter-spacing:.05em;color:var(--text);margin-bottom:.3rem}
+.res-hint{color:var(--dim2);font-size:.68rem;line-height:1.6}
+.res-card-bot{padding:1.4rem 2rem}
+.res-actions{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap}
+.res-btn{display:inline-flex;align-items:center;gap:.45rem;padding:.6rem 1.2rem;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;border-radius:100px;border:none;cursor:pointer;transition:all .22s}
+.res-v .res-btn-main{background:var(--violet);color:#fff;box-shadow:0 4px 18px rgba(108,71,255,.28)}
+.res-v .res-btn-main:hover{background:var(--indigo);transform:translateY(-1px)}
+.res-p .res-btn-main{background:var(--accent);color:#fff;box-shadow:0 4px 18px rgba(255,95,160,.28)}
+.res-p .res-btn-main:hover{background:#e0468a;transform:translateY(-1px)}
+.res-t .res-btn-main{background:var(--teal);color:#fff;box-shadow:0 4px 18px rgba(0,201,167,.28)}
+.res-t .res-btn-main:hover{background:#00a88c;transform:translateY(-1px)}
+.res-g .res-btn-main{background:var(--gold);color:#fff;box-shadow:0 4px 18px rgba(245,166,35,.28)}
+.res-g .res-btn-main:hover{background:#d4901a;transform:translateY(-1px)}
+.res-btn-close{background:none;border:1.5px solid var(--border);border-radius:100px;padding:.55rem .9rem;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.08em;color:var(--dim2);cursor:pointer;transition:all .2s;display:none}
+.res-btn-close:hover{border-color:var(--accent);color:var(--accent)}
+.res-filename{font-size:.65rem;color:var(--dim2);font-family:'DM Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px;display:none}
+.res-frame-wrap{padding:0 2rem 2rem;display:none}
+.res-frame-wrap.show{display:block}
+.res-frame-wrap iframe{width:100%;height:520px;border:1px solid var(--border);border-radius:14px;background:#fff}
+
+
+.s-ct{background:linear-gradient(135deg,var(--violet-soft) 0%,#fdf0f8 100%)}
+.ct-g{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.ct-big{font-family:'Bebas Neue',cursive;font-size:clamp(3rem,7vw,5.5rem);letter-spacing:.05em;color:var(--text);line-height:.9;margin-bottom:1.5rem}
+.ct-big em{color:var(--violet);font-style:normal}
+.ct-p{color:var(--dim);font-size:.75rem;line-height:1.9;max-width:400px}
+.ct-links{display:flex;flex-direction:column;gap:1rem}
+.ct-link{display:flex;align-items:center;gap:1.2rem;padding:1.3rem 1.6rem;background:#fff;border:1.5px solid var(--border);border-radius:14px;transition:all .22s;color:var(--text);font-size:.82rem;box-shadow:0 4px 16px var(--glow)}
+.ct-link:hover{border-color:var(--violet);transform:translateX(6px);box-shadow:0 8px 32px var(--glow)}
+.ct-icon{font-size:1.4rem}
+.ct-sub{font-size:.56rem;color:var(--dim2);text-transform:uppercase;letter-spacing:.14em;margin-bottom:.18rem}
+
+/* ── LIGHTBOX ── */
+.lb{position:fixed;inset:0;z-index:8000;background:rgba(28,16,64,.96);display:flex;align-items:center;justify-content:center;padding:2rem;opacity:0;pointer-events:none;transition:opacity .28s}
+.lb.open{opacity:1;pointer-events:all}
+.lb img{max-width:92vw;max-height:88vh;object-fit:contain;border-radius:12px;box-shadow:0 32px 80px rgba(0,0,0,.5)}
+.lb-x{position:absolute;top:1.2rem;right:1.8rem;background:none;border:none;font-size:1.6rem;color:var(--dim2);cursor:pointer;transition:color .2s}
+.lb-x:hover{color:var(--accent)}
+.lb-cap{position:absolute;bottom:1.2rem;left:50%;transform:translateX(-50%);font-size:.63rem;color:var(--dim2);letter-spacing:.07em;background:rgba(28,16,64,.9);padding:.3rem .8rem;border-radius:8px;white-space:nowrap;max-width:80vw;overflow:hidden;text-overflow:ellipsis}
+
+footer{padding:2rem 5rem;border-top:1px solid var(--border);font-size:.6rem;color:var(--dim2);letter-spacing:.1em;text-align:center;background:#fff}
+
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem}.nav-links{gap:1rem}
+  section,.s-misc{padding-left:1.5rem;padding-right:1.5rem}
+  .hero-bottom{grid-template-columns:1fr}.hero-title{text-align:left}.hero-actions{justify-content:flex-start}
+  .ct-g,.misc-g{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="dot"></div><div id="ring"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">SR</div>
+  <div class="nav-links">
+    <a href="#competences">Compétences</a>
+    <a href="#projets">Projets</a>
+    <a href="#experiences">Expériences</a>
+    <a href="#formation">Formation</a>
+    <a href="#ressources">Ressources</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="accueil">
+  <div class="hero-grid"></div>
+  <div class="hero-orb-a"></div>
+  <div class="hero-orb-b"></div>
+  <div class="hero-orb-c"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">BTS SIO · SISR · 2026</div>
+    <div class="hero-name">
+      <div class="ln1">SOPHIE</div>
+      <div class="ln2">RUEL</div>
+    </div>
+    <div class="hero-bottom">
+      <p class="hero-desc">Étudiante en BTS SIO option SISR, passionnée par les réseaux, la supervision système et l'administration. Stage EDU-TECH : déploiement Zabbix, supervision SNMP, sauvegarde NAS. Disponible pour alternance ou stage.</p>
+      <div class="hero-title">Administratrice<br>Systèmes &amp; Réseaux</div>
+      <div class="hero-actions">
+        <a href="#projets" class="btn btn-fill">Voir les projets</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-n">2</div><div class="stat-l">Stages informatique</div></div>
+      <div class="stat"><div class="stat-n">21</div><div class="stat-l">Ans</div></div>
+      <div class="stat"><div class="stat-n">BAC+2</div><div class="stat-l">En cours</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPÉTENCES -->
+<section class="s-skills" id="competences">
+  <div class="sec-eye">01 — Savoir-faire</div>
+  <h2 class="sec-h reveal">Stack Technique</h2>
+  <div class="sk-tabs">
+    <button class="sk-tab on" onclick="skT('reseau',this)">🌐 Réseau</button>
+    <button class="sk-tab" onclick="skT('supervision',this)">📡 Supervision</button>
+    <button class="sk-tab" onclick="skT('sys',this)">🖥 Système</button>
+  </div>
+
+  <div id="sk-reseau" class="sk-pane on">
+    <div class="sk-tbl">
+      <div class="sk-th"><span>Compétence</span><span>Niveau</span><span>Détails</span></div>
+      <div class="sk-r reveal"><div class="sk-name"><span class="dot dv"></span>Protocoles TCP/IP</div><div class="pips"><span class="pip pv"></span><span class="pip pv"></span><span class="pip pv"></span><span class="pip"></span><span class="pip"></span></div><div class="sk-tags"><span class="tag tv">Adressage</span><span class="tag tv">Routage</span><span class="tag tv">Ethernet</span></div></div>
+      <div class="sk-r reveal"><div class="sk-name"><span class="dot dv"></span>VLAN &amp; STP</div><div class="pips"><span class="pip pv"></span><span class="pip pv"></span><span class="pip pv"></span><span class="pip"></span><span class="pip"></span></div><div class="sk-tags"><span class="tag tv">Segmentation</span><span class="tag tv">Spanning Tree</span></div></div>
+      <div class="sk-r reveal"><div class="sk-name"><span class="dot dv"></span>SNMP v2c/v3</div><div class="pips"><span class="pip pv"></span><span class="pip pv"></span><span class="pip pv"></span><span class="pip"></span><span class="pip"></span></div><div class="sk-tags"><span class="tag tv">Switch D-Link</span><span class="tag tv">Pare-feu USG</span><span class="tag tv">OID</span></div></div>
+      <div class="sk-r reveal"><div class="sk-name"><span class="dot dv"></span>Fondamentaux réseau</div><div class="pips"><span class="pip pv"></span><span class="pip pv"></span><span class="pip pv"></span><span class="pip"></span><span class="pip"></span></div><div class="sk-tags"><span class="tag tv">OSI</span><span class="tag tv">DHCP</span><span class="tag tv">DNS</span></div></div>
+    </div>
+  </div>
+
+  <div id="sk-supervision" class="sk-pane">
+    <div class="sk-tbl">
+      <div class="sk-th"><span>Outil</span><span>Niveau</span><span>Usage</span></div>
+      <div class="sk-r reveal"><div class="sk-name"><span class="dot dt"></span>Zabbix 7.4.6</div><div class="pips"><span class="pip pt"></span><span class="pip pt"></span><span class="pip pt"></span><span class="pip"></span><span class="pip"></span></div><div class="sk-tags"><span class="tag tt">Installation</span><span class="tag tt">Hôtes</span><span class="tag tt">Templates</span><span class="tag tt">Triggers</span></div></div>
+      <div class="sk-r reveal"><div class="sk-name"><span class="dot dt"></span>Graphiques &amp; Métriques</div><div class="pips"><span class="pip pt"></span><span class="pip pt"></span><span class="pip pt"></span><span class="pip"></span><span class="pip"></span></div><div class="sk-tags"><span class="tag tt">Trafic réseau</span><span class="tag tt">CPU</span><span class="tag tt">Uptime</span><span class="tag tt">ICMP</span></div></div>
+      <div class="sk-r reveal"><div class="sk-name"><span class="dot dt"></span>NAS / Sauvegardes</div><div class="pips"><span class="pip pt"></span><span class="pip pt"></span><span class="pip pt"></span><span class="pip"></span><span class="pip"></span></div><div class="sk-tags"><span class="tag tt">Backup externalisé</span><span class="tag tt">RAID</span><span class="tag tt">PRA</span></div></div>
+    </div>
+  </div>
+
+  <div id="sk-sys" class="sk-pane">
+    <div class="sk-tbl">
+      <div class="sk-th"><span>Système</span><span>Niveau</span><span>Usage</span></div>
+      <div class="sk-r reveal"><div class="sk-name"><span class="dot dp"></span>Linux (Debian/Ubuntu)</div><div class="pips"><span class="pip pp"></span><span class="pip pp"></span><span class="pip pp"></span><span class="pip"></span><span class="pip"></span></div><div class="sk-tags"><span class="tag tp">CLI</span><span class="tag tp">Services</span><span class="tag tp">Zabbix server</span></div></div>
+      <div class="sk-r reveal"><div class="sk-name"><span class="dot dp"></span>Windows Server</div><div class="pips"><span class="pip pp"></span><span class="pip pp"></span><span class="pip pp"></span><span class="pip"></span><span class="pip"></span></div><div class="sk-tags"><span class="tag tp">Active Directory</span><span class="tag tp">GPO</span></div></div>
+      <div class="sk-r reveal"><div class="sk-name"><span class="dot dp"></span>PowerShell</div><div class="pips"><span class="pip pp"></span><span class="pip pp"></span><span class="pip pp"></span><span class="pip"></span><span class="pip"></span></div><div class="sk-tags"><span class="tag tp">Scripts</span><span class="tag tp">Automatisation</span></div></div>
+    </div>
+  </div>
+
+  <div id="sk-dev" class="sk-pane">
+    <div class="sk-tbl">
+      <div class="sk-th"><span>Technologie</span><span>Niveau</span><span>Usage</span></div>
+      <div class="sk-r reveal"><div class="sk-name"><span class="dot dv"></span>C# / PHP</div><div class="pips"><span class="pip pv"></span><span class="pip pv"></span><span class="pip pv"></span><span class="pip"></span><span class="pip"></span></div><div class="sk-tags"><span class="tag tv">Programmation</span><span class="tag tv">Applications</span></div></div>
+      <div class="sk-r reveal"><div class="sk-name"><span class="dot dv"></span>MySQL / SQL Server</div><div class="pips"><span class="pip pv"></span><span class="pip pv"></span><span class="pip pv"></span><span class="pip"></span><span class="pip"></span></div><div class="sk-tags"><span class="tag tv">Bases de données</span><span class="tag tv">Requêtes</span></div></div>
+      <div class="sk-r reveal"><div class="sk-name"><span class="dot dv"></span>Merise</div><div class="pips"><span class="pip pv"></span><span class="pip pv"></span><span class="pip pv"></span><span class="pip pv"></span><span class="pip"></span></div><div class="sk-tags"><span class="tag tv">MCD</span><span class="tag tv">MLD</span><span class="tag tv">Modélisation</span></div></div>
+      <div class="sk-r reveal"><div class="sk-name"><span class="dot dv"></span>Notepad++ / Eclipse</div><div class="pips"><span class="pip pv"></span><span class="pip pv"></span><span class="pip pv"></span><span class="pip pv"></span><span class="pip"></span></div><div class="sk-tags"><span class="tag tv">Développement</span><span class="tag tv">IDE</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJETS -->
+<section class="s-proj" id="projets">
+  <div class="sec-eye">02 — Projets</div>
+  <h2 class="sec-h reveal">Réalisations en stage</h2>
+
+  <!-- Projet Zabbix -->
+  <div class="p-card reveal">
+    <div class="p-head">
+      <div>
+        <div class="p-eye">Stage EDU-TECH · Jan–Fév 2026</div>
+        <div class="p-title">Supervision réseau avec Zabbix</div>
+        <p class="p-desc">Déploiement complet d'une infrastructure de supervision réseau via SNMP sur Zabbix 7.4.6. Supervision du switch D-Link DGS-1210-24 et du pare-feu USG FLEX : tableaux de bord personnalisés et alertes temps réel.</p>
+        <div class="p-chips">
+          <span class="chip">Zabbix 7.4.6</span><span class="chip">SNMP v2c</span><span class="chip">D-Link DGS-1210-24</span><span class="chip">USG FLEX</span><span class="chip">Linux</span>
+        </div>
+      </div>
+      <div class="p-meta">
+        <div><div class="pm-l">Hôtes</div><div class="pm-v">2</div></div>
+        <div><div class="pm-l">Durée</div><div class="pm-v">5 sem.</div></div>
+      </div>
+    </div>
+    <div class="g-tabs">
+      <button class="g-tab on" onclick="gT('ztuto',this,'z')">📄 Tuto</button>
+    </div>
+    <div class="g-pane on" id="z-ztuto">
+      <div style="margin-top:.5rem">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem">
+          <a class="btn btn-fill" href="TUTO-008_Supervision_Zabbix_Sophie_Ruel.pdf" target="_blank" style="font-size:.63rem;padding:.6rem 1.2rem;text-decoration:none">📄 Voir le tutoriel PDF</a>
+          <a class="btn btn-ghost" href="TUTO-008_Supervision_Zabbix_Sophie_Ruel.pdf" download style="font-size:.63rem;padding:.6rem 1.2rem;text-decoration:none">⬇ Télécharger</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Projet NAS -->
+  <div class="p-card reveal">
+    <div class="p-head">
+      <div>
+        <div class="p-eye">Stage EDU-TECH · Jan–Fév 2026</div>
+        <div class="p-title">Sauvegarde externalisée NAS</div>
+        <p class="p-desc">Mise en place d'un système de sauvegarde externalisée sur NAS pour garantir la continuité de service et la récupération des données en cas d'incident. Stratégie de Plan de Reprise d'Activité (PRA).</p>
+        <div class="p-chips">
+          <span class="chip">NAS</span><span class="chip">Backup</span><span class="chip">PRA</span><span class="chip">RAID</span><span class="chip">Sauvegarde externalisée</span>
+        </div>
+      </div>
+      <div class="p-meta">
+        <div><div class="pm-l">Type</div><div class="pm-v">Infra</div></div>
+        <div><div class="pm-l">Durée</div><div class="pm-v">5 sem.</div></div>
+      </div>
+    </div>
+    <div class="g-tabs">
+      <button class="g-tab on" onclick="gT('ntuto',this,'n')">📄 Tuto</button>
+    </div>
+    <div class="g-pane on" id="n-ntuto">
+      <div class="g-sub">📄 Tutoriel PDF — Sauvegarde NAS</div>
+      <div style="margin-top:.5rem">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem">
+          <a class="btn btn-fill" href="Wasabi_oral.pdf" target="_blank" style="font-size:.63rem;padding:.6rem 1.2rem;text-decoration:none">📄 Voir le tutoriel PDF</a>
+          <a class="btn btn-ghost" href="Wasabi_oral.pdf" download style="font-size:.63rem;padding:.6rem 1.2rem;text-decoration:none">⬇ Télécharger</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Projet ISB -->
+  <div class="p-card reveal">
+    <div class="p-head">
+      <div>
+        <div class="p-eye">Stage EDU-TECH · Jan–Fév 2026</div>
+        <div class="p-title">Projet I S B</div>
+        <p class="p-desc">Projet réalisé lors du stage EDU-TECH (Jan–Fév 2026), en parallèle du déploiement Zabbix et de la sauvegarde NAS. Ce projet a été mené dans le cadre de la 2ème année de BTS SIO option SISR.</p>
+        <div class="p-chips">
+          <span class="chip">Stage 2ème année</span><span class="chip">Jan–Fév 2026</span><span class="chip">EDU-TECH</span>
+        </div>
+      </div>
+      <div class="p-meta">
+        <div><div class="pm-l">Lieu</div><div class="pm-v">EDU-TECH</div></div>
+        <div><div class="pm-l">Durée</div><div class="pm-v">5 sem.</div></div>
+      </div>
+    </div>
+    <div class="g-tabs">
+      <button class="g-tab on" onclick="gT('ituto',this,'i')">📄 ISB</button>
+      <button class="g-tab" onclick="gT('ict',this,'i')">📄 ICT</button>
+    </div>
+    <div class="g-pane on" id="i-ituto">
+      <div style="margin-top:.5rem">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem">
+          <a class="btn btn-fill" href="ISB.pdf" target="_blank" style="font-size:.63rem;padding:.6rem 1.2rem;text-decoration:none">📄 Voir le document ISB</a>
+          <a class="btn btn-ghost" href="ISB.pdf" download style="font-size:.63rem;padding:.6rem 1.2rem;text-decoration:none">⬇ Télécharger</a>
+        </div>
+
+      </div>
+    </div>
+    <div class="g-pane" id="i-ict">
+      <div style="margin-top:.5rem">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem">
+          <a class="btn btn-fill" href="ICT.pdf" target="_blank" style="font-size:.63rem;padding:.6rem 1.2rem;text-decoration:none">📄 Voir le document ICT</a>
+          <a class="btn btn-ghost" href="ICT.pdf" download style="font-size:.63rem;padding:.6rem 1.2rem;text-decoration:none">⬇ Télécharger</a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPÉRIENCES -->
+<section class="s-exp" id="experiences">
+  <div class="sec-eye">03 — Parcours Professionnel</div>
+  <h2 class="sec-h reveal">Expériences</h2>
+  <div class="tl">
+    <div class="te reveal">
+      <div class="te-d">Jan – Fév 2026</div>
+      <div class="te-r">Stage Informatique</div>
+      <div class="te-c">EDU-TECH</div>
+      <ul class="te-ul">
+        <li>Déploiement du serveur de supervision <strong>Zabbix 7.4.6</strong> via SNMP</li>
+        <li>Supervision du switch D-Link DGS-1210-24 et du pare-feu USG FLEX via SNMP</li>
+        <li>Création de tableaux de bord personnalisés avec widgets graphiques et alertes temps réel</li>
+        <li>Mise en place d'un système de sauvegarde externalisée <strong>NAS</strong></li>
+        <li>Support client téléphonique et assistance utilisateur</li>
+      </ul>
+    </div>
+    <div class="te reveal">
+      <div class="te-d">Juin 2025</div>
+      <div class="te-r">Stage Informatique</div>
+      <div class="te-c">DINSI – Mairie de Martigues</div>
+      <ul class="te-ul">
+        <li>Assistance technique et maintenance des postes informatiques</li>
+        <li>Installation et configuration de logiciels et matériels</li>
+        <li>Participation au support utilisateur et à la gestion du réseau interne</li>
+      </ul>
+    </div>
+    <div class="te reveal">
+      <div class="te-d">Août 2024</div>
+      <div class="te-r">CDD — Agent de propreté urbaine</div>
+      <div class="te-c">Mairie de La Couronne – Carro</div>
+      <ul class="te-ul">
+        <li>Participation aux missions de propreté urbaine</li>
+        <li>Nettoyage et entretien des plages et espaces publics</li>
+        <li>Ramassage des déchets et gestion des points de collecte</li>
+        <li>Sensibilisation des usagers au respect de l'environnement</li>
+      </ul>
+    </div>
+    <div class="te reveal">
+      <div class="te-d">Juil. 2017 – Juil. 2021</div>
+      <div class="te-r">Bénévolat Scout</div>
+      <div class="te-c">Éclaireurs et Éclaireuses de la Nature (EDLN)</div>
+      <ul class="te-ul">
+        <li>Organisation de camps, installation du matériel, montage de structures en bois</li>
+        <li>Pratique régulière d'activités sportives et de pleine nature : randonnée, orientation</li>
+        <li>Apprentissage du travail en équipe, autonomie et responsabilité</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FORMATION -->
+<section class="s-form" id="formation">
+  <div class="sec-eye">04 — Parcours Académique</div>
+  <h2 class="sec-h reveal">Formation</h2>
+  <div class="form-grid">
+    <div class="fc reveal">
+      <div class="fc-y">2025 – 2026 · En cours</div>
+      <div class="fc-d">BTS SIO — 2ème année</div>
+      <div class="fc-s">Lycée Victor Hugo · Marseille</div>
+    </div>
+    <div class="fc reveal">
+      <div class="fc-y">2024 – 2025</div>
+      <div class="fc-d">BTS SIO — 1ère année</div>
+      <div class="fc-s">Lycée Victor Hugo · Marseille</div>
+    </div>
+    <div class="fc reveal">
+      <div class="fc-y">2023 – 2024</div>
+      <div class="fc-d">Terminale Bac Général</div>
+      <div class="fc-s">Lycée Jean Lurçat · Martigues<br><span style="opacity:.55;font-size:.68rem">Spécialité Maths &amp; Numérique / NSI</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- LANGUES & LOISIRS -->
+<section class="s-misc" id="misc">
+  <div class="misc-g">
+    <div class="panel reveal">
+      <div class="p-t">🌍 Langues</div>
+      <div class="lang">
+        <div class="lang-row"><span>Français</span><span class="lang-lv">Courant</span></div>
+        <div class="lang-bar"><div class="lang-fill" style="--w:95%"></div></div>
+      </div>
+      <div class="lang">
+        <div class="lang-row"><span>Espagnol</span><span class="lang-lv">A2++</span></div>
+        <div class="lang-bar"><div class="lang-fill" style="--w:38%"></div></div>
+      </div>
+      <div class="lang">
+        <div class="lang-row"><span>Anglais</span><span class="lang-lv">A1+</span></div>
+        <div class="lang-bar"><div class="lang-fill" style="--w:25%"></div></div>
+      </div>
+    </div>
+    <div class="panel reveal">
+      <div class="p-t">✨ Loisirs</div>
+      <div class="hobbies">
+        <div class="hob">🎬 Cinéma</div>
+        <div class="hob">⛵ Voile</div>
+        <div class="hob">🍳 Cuisine</div>
+        <div class="hob">🏕️ Scoutisme</div>
+        <div class="hob">🥾 Randonnée</div>
+        <div class="hob">🧭 Orientation</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESSOURCES -->
+<section class="s-res" id="ressources">
+  <div class="sec-eye">05 — Documentation</div>
+  <h2 class="sec-h reveal">Ressources</h2>
+  <div class="res-grid">
+
+    <div class="res-card res-v reveal">
+      <div class="res-card-top">
+        <div class="res-eye">Ressource 01</div>
+        <div class="res-name">Document PDF 1</div>
+        <p class="res-hint">Cliquez pour charger et afficher votre document.</p>
+      </div>
+      <div class="res-card-bot">
+        <input type="file" id="r1-inp" accept=".pdf" style="display:none" onchange="loadResPdf(this,'r1')">
+        <div class="res-actions">
+          <button class="res-btn res-btn-main" onclick="document.getElementById('r1-inp').click()">📄 Charger PDF</button>
+          <span class="res-filename" id="r1-name"></span>
+          <button class="res-btn-close" id="r1-close" onclick="closeResPdf('r1')">✕ Fermer</button>
+        </div>
+      </div>
+      <div class="res-frame-wrap" id="r1-wrap">
+        <iframe id="r1-frame" src=""></iframe>
+      </div>
+    </div>
+
+    <div class="res-card res-p reveal">
+      <div class="res-card-top">
+        <div class="res-eye">Ressource 02</div>
+        <div class="res-name">Document PDF 2</div>
+        <p class="res-hint">Cliquez pour charger et afficher votre document.</p>
+      </div>
+      <div class="res-card-bot">
+        <input type="file" id="r2-inp" accept=".pdf" style="display:none" onchange="loadResPdf(this,'r2')">
+        <div class="res-actions">
+          <button class="res-btn res-btn-main" onclick="document.getElementById('r2-inp').click()">📄 Charger PDF</button>
+          <span class="res-filename" id="r2-name"></span>
+          <button class="res-btn-close" id="r2-close" onclick="closeResPdf('r2')">✕ Fermer</button>
+        </div>
+      </div>
+      <div class="res-frame-wrap" id="r2-wrap">
+        <iframe id="r2-frame" src=""></iframe>
+      </div>
+    </div>
+
+    <div class="res-card res-t reveal">
+      <div class="res-card-top">
+        <div class="res-eye">Ressource 03</div>
+        <div class="res-name">Document PDF 3</div>
+        <p class="res-hint">Cliquez pour charger et afficher votre document.</p>
+      </div>
+      <div class="res-card-bot">
+        <input type="file" id="r3-inp" accept=".pdf" style="display:none" onchange="loadResPdf(this,'r3')">
+        <div class="res-actions">
+          <button class="res-btn res-btn-main" onclick="document.getElementById('r3-inp').click()">📄 Charger PDF</button>
+          <span class="res-filename" id="r3-name"></span>
+          <button class="res-btn-close" id="r3-close" onclick="closeResPdf('r3')">✕ Fermer</button>
+        </div>
+      </div>
+      <div class="res-frame-wrap" id="r3-wrap">
+        <iframe id="r3-frame" src=""></iframe>
+      </div>
+    </div>
+
+    <div class="res-card res-g reveal">
+      <div class="res-card-top">
+        <div class="res-eye">Ressource 04</div>
+        <div class="res-name">Document PDF 4</div>
+        <p class="res-hint">Cliquez pour charger et afficher votre document.</p>
+      </div>
+      <div class="res-card-bot">
+        <input type="file" id="r4-inp" accept=".pdf" style="display:none" onchange="loadResPdf(this,'r4')">
+        <div class="res-actions">
+          <button class="res-btn res-btn-main" onclick="document.getElementById('r4-inp').click()">📄 Charger PDF</button>
+          <span class="res-filename" id="r4-name"></span>
+          <button class="res-btn-close" id="r4-close" onclick="closeResPdf('r4')">✕ Fermer</button>
+        </div>
+      </div>
+      <div class="res-frame-wrap" id="r4-wrap">
+        <iframe id="r4-frame" src=""></iframe>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="s-ct" id="contact">
+  <div class="sec-eye">06 — Me joindre</div>
+  <div class="ct-g">
+    <div class="reveal">
+      <div class="ct-big">TRAVAILLONS<br><em>ENSEMBLE</em></div>
+      <p class="ct-p">Disponible pour un stage, une alternance ou tout projet informatique. N'hésitez pas à me contacter pour discuter de vos besoins.</p>
+      <p style="margin-top:1rem;color:var(--dim2);font-size:.7rem">📍 Résidence Cap Bleu · 13500 Martigues</p>
+      <p style="margin-top:.4rem;color:var(--dim2);font-size:.7rem">🎂 Née le 29 janvier 2005 · Saint-Pétersbourg, Russie</p>
+    </div>
+    <div class="ct-links reveal">
+      <a class="ct-link" href="tel:0783867708">
+        <span class="ct-icon">📞</span>
+        <div><div class="ct-sub">Téléphone</div>07 83 86 77 08</div>
+      </a>
+      <a class="ct-link" href="/cdn-cgi/l/email-protection#5b292e3e3728342b33323e69621b3c363a323775383436">
+        <span class="ct-icon">✉️</span>
+        <div><div class="ct-sub">Email</div><span class="__cf_email__" data-cfemail="c2b0b7a7aeb1adb2aaaba7f0fb82a5afa3abaeeca1adaf">[email&#160;protected]</span></div>
+      </a>
+      <a class="ct-link" href="CV_Sophie_Ruel.pdf" target="_blank">
+        <span class="ct-icon">📄</span>
+        <div><div class="ct-sub">CV</div>Voir mon CV</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div class="lb" id="lb" onclick="closeLb(event)">
+  <button class="lb-x" onclick="closeLb()">✕</button>
+  <img id="lb-img" src="" alt="">
+  <div class="lb-cap" id="lb-cap"></div>
+</div>
+
+<footer>© 2026 Sophie Ruel — Portfolio BTS SIO · Conçu avec passion 💜</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* CURSEUR */
+const dot=document.getElementById('dot'),ring=document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.transform=`translate(${mx-5}px,${my-5}px)`});
+(function anim(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;ring.style.transform=`translate(${rx-19}px,${ry-19}px)`;requestAnimationFrame(anim)})();
+
+/* SCROLL REVEAL */
+document.querySelectorAll('.reveal').forEach(r=>
+  new IntersectionObserver(([e])=>{if(e.isIntersecting){
+    const s=[...e.target.parentElement.querySelectorAll('.reveal')];
+    e.target.style.transitionDelay=(s.indexOf(e.target)*.08)+'s';
+    e.target.classList.add('vis');
+  }},{threshold:.1}).observe(r)
+);
+
+/* LANG BARS */
+document.querySelectorAll('.lang-fill').forEach(f=>
+  new IntersectionObserver(([e])=>{if(e.isIntersecting)setTimeout(()=>f.classList.add('anim'),200)},{threshold:.5}).observe(f)
+);
+
+/* NAV ACTIVE */
+const secs=document.querySelectorAll('section[id]');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){
+    document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+    const link=document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+    if(link)link.classList.add('active');
+  }});
+},{threshold:.4});
+secs.forEach(s=>obs.observe(s));
+
+/* SKILL TABS */
+function skT(id,btn){
+  document.querySelectorAll('.sk-pane').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.sk-tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById('sk-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+
+/* GALLERY TABS */
+function gT(id,btn,prefix){
+  const card=btn.closest('.p-card');
+  card.querySelectorAll('.g-pane').forEach(p=>p.classList.remove('on'));
+  card.querySelectorAll('.g-tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById(prefix+'-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+
+/* LIGHTBOX */
+function openLb(src,cap){
+  document.getElementById('lb-img').src=src;
+  document.getElementById('lb-cap').textContent=cap||'';
+  document.getElementById('lb').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLb(e){
+  if(!e||e.target===document.getElementById('lb')||e.target.classList.contains('lb-x')){
+    document.getElementById('lb').classList.remove('open');
+    document.body.style.overflow='';
+  }
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLb({})});
+
+/* DRAG & DROP */
+const zone=document.getElementById('uploadZone');
+zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('drag')});
+zone.addEventListener('dragleave',()=>zone.classList.remove('drag'));
+zone.addEventListener('drop',e=>{
+  e.preventDefault();zone.classList.remove('drag');
+  const file=e.dataTransfer.files[0];
+  if(file&&file.name.endsWith('.docx'))processDocx(file);
+  else showError('Merci de déposer un fichier .docx valide.');
+});
+
+function loadDocx(input){const file=input.files[0];if(!file)return;processDocx(file);}
+
+function processDocx(file){
+  hideError();showProgress(10);
+  const reader=new FileReader();
+  reader.onload=function(e){
+    showProgress(40);
+    mammoth.convertToHtml({arrayBuffer:e.target.result},{
+      convertImage:mammoth.images.imgElement(function(image){
+        return image.read("base64").then(function(imageContent){
+          return{src:"data:"+image.contentType+";base64,"+imageContent};
+        });
+      })
+    }).then(function(result){
+      showProgress(90);
+      const html=result.value;
+      if(!html.trim()){showError('Le fichier Word semble vide.');hideProgress();return;}
+      document.getElementById('tutoContentBody').innerHTML=html;
+      document.getElementById('tutoContentTitle').textContent=file.name.replace('.docx','');
+      document.getElementById('tutoContent').classList.add('show');
+      document.getElementById('fileNameLabel').textContent=file.name;
+      document.getElementById('fileBadge').classList.add('show');
+      zone.style.display='none';
+      document.querySelectorAll('#tutoContentBody img').forEach(img=>{
+        img.addEventListener('click',()=>openLb(img.src,img.alt||''));
+        img.title='Cliquer pour agrandir';
+      });
+      showProgress(100);setTimeout(hideProgress,600);
+    }).catch(function(err){showError('Erreur : '+err.message);hideProgress();});
+  };
+  reader.onerror=()=>{showError('Impossible de lire le fichier.');hideProgress();};
+  reader.readAsArrayBuffer(file);
+}
+
+function resetDocx(){
+  document.getElementById('tutoContent').classList.remove('show');
+  document.getElementById('tutoContentBody').innerHTML='';
+  document.getElementById('fileBadge').classList.remove('show');
+  document.getElementById('docxInput').value='';
+  zone.style.display='';
+  hideError();
+}
+function showProgress(pct){document.getElementById('tutoProgress').classList.add('show');document.getElementById('tutoProgressBar').style.width=pct+'%';}
+function hideProgress(){document.getElementById('tutoProgress').classList.remove('show');}
+function showError(msg){const el=document.getElementById('tutoError');el.textContent=msg;el.classList.add('show');}
+function hideError(){document.getElementById('tutoError').classList.remove('show');}
+
+/* RESSOURCES PDF */
+function loadResPdf(input, id){
+  const file = input.files[0];
+  if(!file) return;
+  const url = URL.createObjectURL(file);
+  document.getElementById(id+'-frame').src = url;
+  document.getElementById(id+'-wrap').classList.add('show');
+  const nameEl = document.getElementById(id+'-name');
+  nameEl.textContent = file.name;
+  nameEl.style.display = 'block';
+  const closeBtn = document.getElementById(id+'-close');
+  closeBtn.style.display = 'inline-flex';
+}
+function closeResPdf(id){
+  document.getElementById(id+'-frame').src = '';
+  document.getElementById(id+'-wrap').classList.remove('show');
+  document.getElementById(id+'-inp').value = '';
+  const nameEl = document.getElementById(id+'-name');
+  nameEl.textContent = '';
+  nameEl.style.display = 'none';
+  document.getElementById(id+'-close').style.display = 'none';
+}
+
+function handlePdfInput(input, viewerId){
+  const file = input.files[0];
+  if(!file) return;
+  const url = URL.createObjectURL(file);
+  // frame = viewerId + '-frame'
+  const frame = document.getElementById(viewerId+'-frame');
+  if(frame){ frame.src=url; frame.style.display='block'; }
+  // name = viewerId remplacer 'viewer' par 'name', ou chercher span dans le conteneur
+  const container = document.getElementById(viewerId);
+  if(container){
+    const nameEl = container.querySelector('span[id]');
+    if(nameEl) nameEl.textContent = file.name;
+    const closeBtn = container.querySelector('button[id]');
+    if(closeBtn) closeBtn.style.display='inline-block';
+  }
+}
+
+function resetPdf(viewerId, inputId, frameId, nameId, closeBtnId){
+  const frame = document.getElementById(frameId);
+  const input = document.getElementById(inputId);
+  const nameEl = document.getElementById(nameId);
+  const closeBtn = document.getElementById(closeBtnId);
+  if(frame){ frame.src=''; frame.style.display='none'; }
+  if(input) input.value='';
+  if(nameEl) nameEl.textContent='';
+  if(closeBtn) closeBtn.style.display='none';
+}
+</script>
+</body>
+</html>
